@@ -1,0 +1,41 @@
+name: doctorhunt_app
+description: "A new Flutter project."
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  flutter_svg: ^2.2.0
+  go_router: ^16.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  fonts:
+    - family: Rubik
+      fonts:
+        - asset: Fonts\Rubik-Regular.ttf
+
+  assets:
+    - asssets\logo\Vector.svg
+    - asssets\images\doc 1.svg
+    - asssets\images\doc 2.svg
+    - asssets\images\doc 3.svg
+    - asssets\images\admin.svg
+    - asssets\images\patient.svg
+    - asssets\logo\Google.svg
+    - asssets\logo\Facebook.svg
