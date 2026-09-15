@@ -1,6 +1,7 @@
 import 'package:doctorhunt_app/apps/features/onboarding/widgets/OnboardingButton.dart';
+import 'package:doctorhunt_app/generated/image_assets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:go_router/go_router.dart';
 
 import '../widgets/role_card.dart';
@@ -88,8 +89,8 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
                 // =========================
                 // LOGO
                 // =========================
-                SvgPicture.asset(
-                  'assets/logo/Vector.svg',
+                Image.asset(
+                  ImageAssets.logo,
                   width: 72,
                   height: 72,
                   fit: BoxFit.contain,
@@ -161,7 +162,7 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
                       'records.',
                   selected: selectedRole == 'patient',
                   onTap: () => selectRole('patient'),
-                  iconPath: 'assets/images/patient.svg',
+                  iconPath: 'asssets/images/patient.png',
                 ),
 
                 const SizedBox(height: 16),
@@ -174,7 +175,7 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
                   description:
                       'Manage doctors, appointments,\n'
                       'users, and the platform.',
-                  iconPath: 'assets/images/admin.svg',
+                  iconPath: 'asssets/images/admin.png',
                   selected: selectedRole == 'admin',
                   onTap: () => selectRole('admin'),
                 ),

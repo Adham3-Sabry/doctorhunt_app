@@ -6,7 +6,7 @@ abstract class ImageAssets {
   static const String _base = 'assets/images';
 
   // Logos
-  static const String logo = 'assets/logo/Vector.svg';
+  static const String logo = 'asssets/images/main.png';
   static const String logoWhite = '$_base/logo_white.png';
 
   // Onboarding

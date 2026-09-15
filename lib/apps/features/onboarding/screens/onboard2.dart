@@ -31,7 +31,7 @@ class OnboardingScreen2 extends StatelessWidget {
               
               child: ClipOval(
                 child: Image.asset(
-                  'asssets/images/doc 2.svg',
+                  'asssets/images/doc 2.png',
                   fit: BoxFit.cover,
                 ),
               ),

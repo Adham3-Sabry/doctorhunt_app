@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 
 class RoleCard extends StatelessWidget {
   final String title;
@@ -57,7 +57,7 @@ class RoleCard extends StatelessWidget {
                       : const Color(0xFFE9F0EC),
                 ),
                 alignment: Alignment.center,
-                child: SvgPicture.asset(
+                child: Image.asset(
                   iconPath,
                   width: 22,
                   height: 22,

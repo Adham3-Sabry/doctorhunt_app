@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 
 class AuthSocialButton extends StatelessWidget {
   final String title;
@@ -33,7 +33,7 @@ class AuthSocialButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(
+              Image.asset(
                 iconPath,
                 width: 20,
                 height: 20,

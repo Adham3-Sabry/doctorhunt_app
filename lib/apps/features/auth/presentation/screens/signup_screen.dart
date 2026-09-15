@@ -144,7 +144,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       children: [
                         AuthSocialButton(
                           title: 'Google',
-                          iconPath: 'assets/logo/Google.svg',
+                          iconPath: 'asssets/images/Google.png',
                           onPressed: () {},
                         ),
 
@@ -152,7 +152,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                         AuthSocialButton(
                           title: 'Facebook',
-                          iconPath: 'assets/logo/Facebook.svg',
+                          iconPath: 'asssets/images/face.png',
                           onPressed: () {},
                         ),
                       ],

@@ -1,6 +1,5 @@
 import 'package:doctorhunt_app/generated/image_assets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -86,7 +85,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   // Doctor Hunt Logo
-                  SvgPicture.asset(
+                  Image.asset(
                    ImageAssets.logo,
                     width: 70,
                     height: 70,

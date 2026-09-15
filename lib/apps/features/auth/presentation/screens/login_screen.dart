@@ -142,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       AuthSocialButton(
                         title: 'Google',
-                        iconPath: 'assets/logo/Google.svg',
+                        iconPath: 'asssets/images/Google.png',
                         onPressed: () {},
                       ),
             
@@ -150,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
             
                       AuthSocialButton(
                         title: 'Facebook',
-                        iconPath: 'assets/logo/Facebook.svg',
+                        iconPath: 'asssets/images/face.png',
                         onPressed: () {},
                       ),
                     ],
