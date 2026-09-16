@@ -1,6 +1,7 @@
 
 import 'package:doctorhunt_app/apps/features/auth/presentation/screens/login_screen.dart';
 import 'package:doctorhunt_app/apps/features/auth/presentation/screens/signup_screen.dart';
+import 'package:doctorhunt_app/apps/features/home/presentation/screen/home_screen.dart';
 import 'package:doctorhunt_app/apps/features/onboarding/screens/choose_role.dart';
 import 'package:doctorhunt_app/apps/features/onboarding/screens/onboard1.dart';
 import 'package:doctorhunt_app/apps/features/onboarding/screens/onboard2.dart';
@@ -17,6 +18,7 @@ class AppRouter {
   static const String chooseRole = '/choose-role';
   static const String login = '/login';
   static const String signup = '/signup';
+  static const String home = '/home';
 
 
 
@@ -87,6 +89,14 @@ class AppRouter {
         name: 'signup',
         builder: (context, state) {
           return const SignupScreen();
+        },
+      ),
+     
+      GoRoute(
+        path: home,
+        name: 'home',
+        builder: (context, state) {
+          return const HomeScreen();
         },
       ),
     ],

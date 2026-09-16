@@ -194,6 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   AuthPrimaryButton(
                     title: 'Login',
                     onPressed: () {
+                      context.go('/home');
                       debugPrint(
                         controller.emailController.text,
                       );
