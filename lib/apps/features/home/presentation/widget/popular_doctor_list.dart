@@ -1,5 +1,6 @@
 import 'package:doctorhunt_app/apps/features/home/data/models/doctor_models.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/widgets/custom_horizontal_list.dart';
 
@@ -32,77 +33,81 @@ class _PopularDoctorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 190,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(13),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(.04),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Expanded(
-            flex: 7,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(13),
-              ),
-              child: doctor.imagePath.isEmpty
-                  ? const SizedBox()
-                  : Image.asset(
-                      doctor.imagePath,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
+    return GestureDetector(
+      onTap: () {
+             context.go('/home-details');  },
+      child: Container(
+        width: 190,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(13),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(.04),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
             ),
-          ),
-
-          Expanded(
-            flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    doctor.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontFamily: 'Rubik',
-                      fontSize: 17,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF303030),
-                    ),
-                  ),
-
-                  const SizedBox(height: 3),
-
-                  Text(
-                    doctor.specialty,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontFamily: 'Rubik',
-                      fontSize: 11,
-                      color: Color(0xFF9AA3B7),
-                    ),
-                  ),
-
-                  const SizedBox(height: 4),
-
-                  _RatingRow(rating: doctor.rating),
-                ],
+          ],
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              flex: 7,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(13),
+                ),
+                child: doctor.imagePath.isEmpty
+                    ? const SizedBox()
+                    : Image.asset(
+                        doctor.imagePath,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
-          ),
-        ],
+      
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      doctor.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontFamily: 'Rubik',
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF303030),
+                      ),
+                    ),
+      
+                    const SizedBox(height: 3),
+      
+                    Text(
+                      doctor.specialty,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontFamily: 'Rubik',
+                        fontSize: 11,
+                        color: Color(0xFF9AA3B7),
+                      ),
+                    ),
+      
+                    const SizedBox(height: 4),
+      
+                    _RatingRow(rating: doctor.rating),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
