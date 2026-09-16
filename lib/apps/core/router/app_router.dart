@@ -8,6 +8,7 @@ import 'package:doctorhunt_app/apps/features/onboarding/screens/onboard1.dart';
 import 'package:doctorhunt_app/apps/features/onboarding/screens/onboard2.dart';
 import 'package:doctorhunt_app/apps/features/onboarding/screens/onboard3.dart';
 import 'package:doctorhunt_app/apps/features/onboarding/screens/splash.dart';
+import 'package:doctorhunt_app/apps/features/select_time/presentation/screens/select_time_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
@@ -21,7 +22,7 @@ class AppRouter {
   static const String signup = '/signup';
   static const String home = '/home';
   static const String homedetails = '/home-details';
-
+static const String selectTime = '/select-time';
 
 
 
@@ -109,6 +110,15 @@ class AppRouter {
           return const DoctorDetailsScreen();
         },
       ),
+       
+      GoRoute(
+        path: selectTime,
+        name: 'selectTime',
+        builder: (context, state) {
+          return const SelectTimeScreen();
+        },
+      ),
+      
     ],
   );
 }

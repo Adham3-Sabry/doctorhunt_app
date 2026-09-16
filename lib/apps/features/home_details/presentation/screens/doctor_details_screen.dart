@@ -92,7 +92,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                   DoctorInfoCard(
                     doctor: doctor,
                     onBookNow: () {
-                      // Book Now action
+                        context.go('/select-time');
                     },
                   ),
 
