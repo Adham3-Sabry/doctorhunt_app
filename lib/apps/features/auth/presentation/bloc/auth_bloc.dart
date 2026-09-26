@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:doctorhunt_app/apps/core/utils/auth_error_handler.dart';
 import 'package:doctorhunt_app/apps/features/auth/data/models/auth_models.dart';
 import 'package:doctorhunt_app/apps/features/auth/data/repo/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +13,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   StreamSubscription<supabase.AuthState>? _authSubscription;
 
-  AuthBloc({required this.authRepository}) : super(const AuthState()) {
+  AuthBloc({
+    required this.authRepository,
+  }) : super(const AuthState()) {
     on<AuthStarted>(_onAuthStarted);
     on<AuthSignUpRequested>(_onSignUp);
     on<AuthLoginRequested>(_onLogin);
@@ -24,14 +26,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     _listenToAuthChanges();
   }
 
-  // Listen to Supabase authentication changes.
   void _listenToAuthChanges() {
-    _authSubscription = authRepository.authStateChanges.listen((_) {
+    _authSubscription =
+        authRepository.authStateChanges.listen((_) {
       add(const AuthStarted());
     });
   }
 
-  // Check current authentication state.
+  // =========================
+  // AUTH STARTED
+  // =========================
+
   Future<void> _onAuthStarted(
     AuthStarted event,
     Emitter<AuthState> emit,
@@ -39,20 +44,38 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final supabaseUser = authRepository.currentUser;
 
     if (supabaseUser != null) {
-      final user = AuthUserModel.fromSupabaseUser(supabaseUser);
+      final user = AuthUserModel.fromSupabaseUser(
+        supabaseUser,
+      );
 
-      emit(AuthState(status: AuthStatus.authenticated, user: user));
+      emit(
+        AuthState(
+          status: AuthStatus.authenticated,
+          user: user,
+        ),
+      );
     } else {
-      emit(const AuthState(status: AuthStatus.unauthenticated));
+      emit(
+        const AuthState(
+          status: AuthStatus.unauthenticated,
+        ),
+      );
     }
   }
 
-  // Sign up.
+  // =========================
+  // SIGN UP
+  // =========================
+
   Future<void> _onSignUp(
     AuthSignUpRequested event,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthState(status: AuthStatus.loading));
+    emit(
+      const AuthState(
+        status: AuthStatus.loading,
+      ),
+    );
 
     try {
       final response = await authRepository.signUp(
@@ -72,28 +95,54 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         return;
       }
 
-      final user = AuthUserModel.fromSupabaseUser(response.user!);
+      final user = AuthUserModel.fromSupabaseUser(
+        response.user!,
+      );
 
-      final currentSession = authRepository.currentSession;
+      final currentSession =
+          authRepository.currentSession;
 
+      // Email confirmation OFF
       if (currentSession != null) {
-        emit(AuthState(status: AuthStatus.authenticated, user: user));
-      } else {
-        emit(AuthState(status: AuthStatus.success, user: user));
+        emit(
+          AuthState(
+            status: AuthStatus.authenticated,
+            user: user,
+          ),
+        );
+        return;
       }
-    } on supabase.AuthException catch (e) {
-      emit(AuthState(status: AuthStatus.failure, errorMessage: e.message));
-    } catch (e) {
-      emit(AuthState(status: AuthStatus.failure, errorMessage: e.toString()));
+
+      // Email confirmation ON
+      emit(
+        AuthState(
+          status: AuthStatus.success,
+          user: user,
+        ),
+      );
+    } catch (error) {
+      emit(
+        AuthState(
+          status: AuthStatus.failure,
+          errorMessage: AuthErrorHandler.getMessage(error),
+        ),
+      );
     }
   }
 
-  // Login.
+  // =========================
+  // LOGIN
+  // =========================
+
   Future<void> _onLogin(
     AuthLoginRequested event,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthState(status: AuthStatus.loading));
+    emit(
+      const AuthState(
+        status: AuthStatus.loading,
+      ),
+    );
 
     try {
       final response = await authRepository.login(
@@ -111,40 +160,71 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         return;
       }
 
-      final user = AuthUserModel.fromSupabaseUser(response.user!);
+      final user = AuthUserModel.fromSupabaseUser(
+        response.user!,
+      );
 
-      emit(AuthState(status: AuthStatus.authenticated, user: user));
-    } on supabase.AuthException catch (e) {
-      emit(AuthState(status: AuthStatus.failure, errorMessage: e.message));
-    } catch (e) {
-      emit(AuthState(status: AuthStatus.failure, errorMessage: e.toString()));
+      emit(
+        AuthState(
+          status: AuthStatus.authenticated,
+          user: user,
+        ),
+      );
+    } catch (error) {
+      emit(
+        AuthState(
+          status: AuthStatus.failure,
+          errorMessage: AuthErrorHandler.getMessage(error),
+        ),
+      );
     }
   }
 
-  // Logout.
+  // =========================
+  // LOGOUT
+  // =========================
+
   Future<void> _onLogout(
     AuthLogoutRequested event,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthState(status: AuthStatus.loading));
+    emit(
+      const AuthState(
+        status: AuthStatus.loading,
+      ),
+    );
 
     try {
       await authRepository.logout();
 
-      emit(const AuthState(status: AuthStatus.unauthenticated));
-    } on supabase.AuthException catch (e) {
-      emit(AuthState(status: AuthStatus.failure, errorMessage: e.message));
-    } catch (e) {
-      emit(AuthState(status: AuthStatus.failure, errorMessage: e.toString()));
+      emit(
+        const AuthState(
+          status: AuthStatus.unauthenticated,
+        ),
+      );
+    } catch (error) {
+      emit(
+        AuthState(
+          status: AuthStatus.failure,
+          errorMessage: AuthErrorHandler.getMessage(error),
+        ),
+      );
     }
   }
 
-  // Send password reset email.
+  // =========================
+  // FORGOT PASSWORD
+  // =========================
+
   Future<void> _onForgotPassword(
     AuthForgotPasswordRequested event,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthState(status: AuthStatus.loading));
+    emit(
+      const AuthState(
+        status: AuthStatus.loading,
+      ),
+    );
 
     try {
       await authRepository.sendResetPasswordEmail(
@@ -152,25 +232,42 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         redirectTo: '',
       );
 
-      emit(const AuthState(status: AuthStatus.success));
-    } on supabase.AuthException catch (e) {
-      emit(AuthState(status: AuthStatus.failure, errorMessage: e.message));
-    } catch (e) {
-      emit(AuthState(status: AuthStatus.failure, errorMessage: e.toString()));
+      emit(
+        const AuthState(
+          status: AuthStatus.success,
+        ),
+      );
+    } catch (error) {
+      emit(
+        AuthState(
+          status: AuthStatus.failure,
+          errorMessage: AuthErrorHandler.getMessage(error),
+        ),
+      );
     }
   }
 
-  // Update password.
+  // =========================
+  // UPDATE PASSWORD
+  // =========================
+
   Future<void> _onUpdatePassword(
     AuthUpdatePasswordRequested event,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthState(status: AuthStatus.loading));
+    emit(
+      const AuthState(
+        status: AuthStatus.loading,
+      ),
+    );
 
     try {
-      await authRepository.updatePassword(password: event.password);
+      await authRepository.updatePassword(
+        password: event.password,
+      );
 
-      final supabaseUser = authRepository.currentUser;
+      final supabaseUser =
+          authRepository.currentUser;
 
       if (supabaseUser == null) {
         emit(
@@ -182,13 +279,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         return;
       }
 
-      final user = AuthUserModel.fromSupabaseUser(supabaseUser);
+      final user = AuthUserModel.fromSupabaseUser(
+        supabaseUser,
+      );
 
-      emit(AuthState(status: AuthStatus.success, user: user));
-    } on supabase.AuthException catch (e) {
-      emit(AuthState(status: AuthStatus.failure, errorMessage: e.message));
-    } catch (e) {
-      emit(AuthState(status: AuthStatus.failure, errorMessage: e.toString()));
+      emit(
+        AuthState(
+          status: AuthStatus.success,
+          user: user,
+        ),
+      );
+    } catch (error) {
+      emit(
+        AuthState(
+          status: AuthStatus.failure,
+          errorMessage: AuthErrorHandler.getMessage(error),
+        ),
+      );
     }
   }
 
