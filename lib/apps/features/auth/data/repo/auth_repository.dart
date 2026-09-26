@@ -27,4 +27,6 @@ abstract class AuthRepository {
   User? get currentUser;
 
   Session? get currentSession;
+
+  Stream<AuthState> get authStateChanges;
 }

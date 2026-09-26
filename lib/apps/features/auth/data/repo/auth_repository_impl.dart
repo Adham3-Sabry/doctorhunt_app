@@ -13,8 +13,8 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
     required String name,
     required String role,
-  }) {
-    return remoteDataSource.signUp(
+  }) async {
+    return await remoteDataSource.signUp(
       email: email,
       password: password,
       name: name,
@@ -26,29 +26,29 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<AuthResponse> login({
     required String email,
     required String password,
-  }) {
-    return remoteDataSource.login(email: email, password: password);
+  }) async {
+    return await remoteDataSource.login(email: email, password: password);
   }
 
   @override
-  Future<void> logout() {
-    return remoteDataSource.logout();
+  Future<void> logout() async {
+    await remoteDataSource.logout();
   }
 
   @override
   Future<void> sendResetPasswordEmail({
     required String email,
     required String redirectTo,
-  }) {
-    return remoteDataSource.sendResetPasswordEmail(
+  }) async {
+    await remoteDataSource.sendResetPasswordEmail(
       email: email,
       redirectTo: redirectTo,
     );
   }
 
   @override
-  Future<UserResponse> updatePassword({required String password}) {
-    return remoteDataSource.updatePassword(password: password);
+  Future<UserResponse> updatePassword({required String password}) async {
+    return await remoteDataSource.updatePassword(password: password);
   }
 
   @override
@@ -59,5 +59,10 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Session? get currentSession {
     return remoteDataSource.currentSession;
+  }
+
+  @override
+  Stream<AuthState> get authStateChanges {
+    return remoteDataSource.authStateChanges;
   }
 }
